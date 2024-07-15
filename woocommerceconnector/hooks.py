@@ -92,7 +92,9 @@ scheduler_events = {
 # Overriding Whitelisted Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "woocommerceconnector.event.get_events"
-# }
+
+override_whitelisted_methods = {
+	"erpnext.selling.doctype.sales_order.sales_order.make_sales_invoice": "woocommerceconnector.overrides.whitelisted.sales_invoice.custom_make_sales_invoice",
+	"erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry": "woocommerceconnector.overrides.whitelisted.payment_entry.custom_get_payment_entry"
+}
 
