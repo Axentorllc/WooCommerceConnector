@@ -9,7 +9,7 @@ from .woocommerce_requests import get_request, get_woocommerce_orders, get_wooco
 from erpnext.selling.doctype.sales_order.sales_order import make_delivery_note, make_sales_invoice
 import requests.exceptions
 import base64, requests, datetime, os
-
+from woocommerceconnector.overrides.whitelisted.sales_invoice import custom_make_sales_invoice
 
 def sync_orders():
     sync_woocommerce_orders()
@@ -284,7 +284,7 @@ def get_customer_address_from_order(type, woocommerce_order, customer):
 def create_sales_invoice(woocommerce_order, woocommerce_settings, so):
     if not frappe.db.get_value("Sales Invoice", {"woocommerce_order_id": woocommerce_order.get("id")}, "name")\
         and so.docstatus==1 and not so.per_billed:
-        si = make_sales_invoice(so.name)
+        si = custom_make_sales_invoice(so.name)
         si.woocommerce_order_id = woocommerce_order.get("id")
         si.naming_series = woocommerce_settings.sales_invoice_series or "SI-woocommerce-"
         si.flags.ignore_mandatory = True

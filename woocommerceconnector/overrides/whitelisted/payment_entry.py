@@ -1,5 +1,8 @@
 import frappe
-from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
+from erpnext.accounts.doctype.payment_entry.payment_entry import (
+	get_bank_cash_account,
+	get_payment_entry
+) 
 
 
 @frappe.whitelist()
@@ -30,4 +33,6 @@ def custom_get_payment_entry(
     mode_of_payment = frappe.db.sql(q, as_dict=True)
     mop = mode_of_payment[0].get("mode_of_payment") if len(mode_of_payment) else None
     pe.mode_of_payment = mop
+    bank = get_bank_cash_account(pe, bank_account)
+    pe.paid_to = bank.get("account")
     return pe
