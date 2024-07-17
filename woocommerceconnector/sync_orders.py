@@ -210,12 +210,12 @@ def create_sales_order(woocommerce_order, woocommerce_settings, company=None):
             "selling_price_list": woocommerce_settings.price_list,
             "ignore_pricing_rule": 1,
             "items": get_order_items(woocommerce_order.get("line_items"), woocommerce_settings),
-            "taxes": get_order_taxes(woocommerce_order, woocommerce_settings),
+            # "taxes": get_order_taxes(woocommerce_order, woocommerce_settings),
             # disabled discount as WooCommerce will send this both in the item rate and as discount
             #"apply_discount_on": "Net Total",
             #"discount_amount": flt(woocommerce_order.get("discount_total") or 0),
             "currency": woocommerce_order.get("currency"),
-            "taxes_and_charges": tax_rules,
+            # "taxes_and_charges": tax_rules,
             "customer_address": billing_address,
             "shipping_address_name": shipping_address,
             "posting_date": woocommerce_order.get("date_created")[:10]          # pull posting date from WooCommerce
