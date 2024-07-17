@@ -10,7 +10,7 @@ from erpnext.selling.doctype.sales_order.sales_order import make_delivery_note, 
 import requests.exceptions
 import base64, requests, datetime, os
 from woocommerceconnector.overrides.whitelisted.sales_invoice import custom_make_sales_invoice
-
+from woocommerceconnector.overrides.whitelisted.payment_entry import custom_get_payment_entry
 def sync_orders():
     sync_woocommerce_orders()
 
@@ -300,7 +300,7 @@ def set_cost_center(items, cost_center):
 
 def make_payment_entry_against_sales_invoice(doc, woocommerce_settings):
     from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
-    payment_entry = get_payment_entry(doc.doctype, doc.name, bank_account=woocommerce_settings.cash_bank_account)
+    payment_entry = custom_get_payment_entry(doc.doctype, doc.name)
     payment_entry.flags.ignore_mandatory = True
     payment_entry.reference_no = doc.name
     payment_entry.reference_date = nowdate()
