@@ -222,7 +222,7 @@ def create_sales_order(woocommerce_order, woocommerce_settings, company=None):
         })
 
         so.flags.ignore_mandatory = True
-
+        so.run_method("calculate_taxes_and_totals")
         # alle orders in ERP = submitted
         so.save(ignore_permissions=True)
         so.submit()
