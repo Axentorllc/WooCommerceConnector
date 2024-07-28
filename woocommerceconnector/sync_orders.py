@@ -215,14 +215,13 @@ def create_sales_order(woocommerce_order, woocommerce_settings, company=None):
             #"apply_discount_on": "Net Total",
             #"discount_amount": flt(woocommerce_order.get("discount_total") or 0),
             "currency": woocommerce_order.get("currency"),
-            # "taxes_and_charges": tax_rules,
+            "taxes_and_charges": tax_rules,
             "customer_address": billing_address,
             "shipping_address_name": shipping_address,
             "posting_date": woocommerce_order.get("date_created")[:10]          # pull posting date from WooCommerce
         })
 
         so.flags.ignore_mandatory = True
-        so.run_method("calculate_taxes_and_totals")
         # alle orders in ERP = submitted
         so.save(ignore_permissions=True)
         so.submit()
