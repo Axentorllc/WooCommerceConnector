@@ -81,10 +81,11 @@ def create_item(woocommerce_item, warehouse, has_variant=0, attributes=None, var
         "stock_uom": get_erpnext_uom(woocommerce_item, woocommerce_settings, attributes),
         "stock_keeping_unit": woocommerce_item.get("sku"), #or get_sku(woocommerce_item),
         "default_warehouse": warehouse,
-        "image": get_item_image(woocommerce_item),
+        # "image": get_item_image(woocommerce_item),
         "weight_uom": weight_unit, #woocommerce_item.get("weight_unit"),
         "weight_per_unit": woocommerce_item.get("weight"),
-        "web_long_description": woocommerce_item.get("description") or woocommerce_item.get("name")
+        "web_long_description": woocommerce_item.get("description") or woocommerce_item.get("name"),
+		"image": woocommerce_item.get("images")[0].get("src") if len(woocommerce_item.get("images")) else None,
         #"uoms": get_conversion_table(attributes, woocommerce_settings) if not has_variant else []
     }
     
@@ -196,7 +197,8 @@ def create_item_variants(woocommerce_item, warehouse, attributes, woocommerce_va
                 "item_price": variant.get("price"),
                 "variant_id": variant.get("id"),
                 "weight_unit": variant.get("weight_unit"),
-                "net_weight": variant.get("weight")
+                "net_weight": variant.get("weight"),
+				"image": (variant.get("image") or {}).get("src"),
             }
 
             woocommerce_variants_attr_list = variant.get("attributes")
