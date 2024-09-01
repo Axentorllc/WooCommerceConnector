@@ -134,6 +134,8 @@ def get_item_code(woocommerce_item, woocommerce_settings):
         item_code = str(woocommerce_item.get("name"))
     elif woocommerce_settings.item_code_based_on == 'Random Hash':
         item_code = frappe.generate_hash(length=10)
+    elif woocommerce_settings.item_code_based_on == 'WooCommerce SKU':
+        item_code = str(woocommerce_item.get("sku"))
     elif woocommerce_settings.item_code_based_on == 'Naming Series':
         item_code = None
         
@@ -179,14 +181,14 @@ def create_item_variants(woocommerce_item, warehouse, attributes, woocommerce_va
     template_item = frappe.db.get_value("Item", filters={"woocommerce_product_id": woocommerce_item.get("id")},
         fieldname=["name", "stock_uom"], as_dict=True)
     
-
+    item_code_based_on = frappe.db.get_single_value("WooCommerce Config", "item_code_based_on")
     if template_item:
         for variant in woocommerce_item.get("variants"):
             woocommerce_item_variant = {
                 "id" : variant.get("id"),
                 "woocommerce_variant_id" : variant.get("id"),
                 "name": woocommerce_item.get("name"),
-                "item_code":  str(variant.get("id")), # + " " + woocommerce_item.get("name"),
+                "item_code": str(variant.get("sku")) if item_code_based_on == "WooCommerce SKU" else str(variant.get("id")), # + " " + woocommerce_item.get("name"),
                 "title": variant.get("name"),
                 "item_group": get_item_group(woocommerce_item.get("")),
                 "sku": variant.get("sku"),
