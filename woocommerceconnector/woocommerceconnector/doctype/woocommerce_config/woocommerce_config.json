@@ -371,7 +371,7 @@
    "fieldname": "item_code_based_on",
    "fieldtype": "Select",
    "label": "Item code based on..",
-   "options": "WooCommerce ID\nWooCommerce ID + Name\nWooCommerce Name\nRandom Hash\nNaming Series",
+   "options": "WooCommerce ID\nWooCommerce ID + Name\nWooCommerce Name\nWooCommerce SKU\nRandom Hash\nNaming Series",
    "reqd": 1
   },
   {
@@ -418,7 +418,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2024-07-15 22:43:33.842915",
+ "modified": "2024-09-01 15:28:12.873954",
  "modified_by": "Administrator",
  "module": "WooCommerceConnector",
  "name": "WooCommerce Config",
