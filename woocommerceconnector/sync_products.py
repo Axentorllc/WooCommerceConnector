@@ -62,7 +62,7 @@ def create_item(woocommerce_item, warehouse, has_variant=0, attributes=None, var
     weight_unit =  woocommerce_settings.get("weight_unit")
     
     item_code = get_item_code(woocommerce_item, woocommerce_settings)
-    images = woocommerce_item.get("images")
+    images = woocommerce_item.get("images") or []
 
     item_dict = {
         "doctype": "Item",
