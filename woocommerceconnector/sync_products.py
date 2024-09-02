@@ -62,6 +62,7 @@ def create_item(woocommerce_item, warehouse, has_variant=0, attributes=None, var
     weight_unit =  woocommerce_settings.get("weight_unit")
     
     item_code = get_item_code(woocommerce_item, woocommerce_settings)
+    images = woocommerce_item.get("images")
 
     item_dict = {
         "doctype": "Item",
@@ -85,7 +86,7 @@ def create_item(woocommerce_item, warehouse, has_variant=0, attributes=None, var
         "weight_uom": weight_unit, #woocommerce_item.get("weight_unit"),
         "weight_per_unit": woocommerce_item.get("weight"),
         "web_long_description": woocommerce_item.get("description") or woocommerce_item.get("name"),
-		"image": woocommerce_item.get("images")[0].get("src") if len(woocommerce_item.get("images")) else None,
+		"image": woocommerce_item.get("images")[0].get("src") if images and len(images) > 0 else None,
         #"uoms": get_conversion_table(attributes, woocommerce_settings) if not has_variant else []
     }
     
