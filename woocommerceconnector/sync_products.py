@@ -89,7 +89,11 @@ def create_item(woocommerce_item, warehouse, has_variant=0, attributes=None, var
 		"image": woocommerce_item.get("images")[0].get("src") if images and len(images) > 0 else None,
         #"uoms": get_conversion_table(attributes, woocommerce_settings) if not has_variant else []
     }
-    
+
+	# update image for item variant 
+    if woocommerce_item.get("image"):
+        item_dict["image"] = woocommerce_item.get("image")
+
     # in case of naming series (item_code = None), set naming series
     if not item_code:
         item_dict['naming_series'] = woocommerce_settings.item_code_naming_series
