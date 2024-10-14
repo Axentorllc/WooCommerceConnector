@@ -251,6 +251,17 @@ def is_item_exists(item_dict, attributes=None, variant_of=None, woocommerce_item
         for field in restricted_fields:
             item_dict.pop(field,None)
 
+		# Todo remove after debugging
+        print("updated item dict is", item_dict)
+        item = frappe.get_doc("Item", erp_item_match[0])
+        values = frappe.db.get_value("Item", item.get("name"), restricted_fields, as_dict=True)
+        changed_fields = [
+			field for field in restricted_fields if cstr(item.get(field)) != cstr(values.get(field))
+		]
+        print(item.get("name"))
+        print("Values", values)
+        print("Changed Values", changed_fields)
+
         update_item(item_details=erp_item_match[0], item_dict=item_dict)
         return True
 
